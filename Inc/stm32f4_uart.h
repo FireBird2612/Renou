@@ -16,7 +16,7 @@ typedef struct {
   volatile uint32_t USART_GTPR; /*  guard time and prescaler register   */
 } uart_reg_def;
 
-#define USART2 ((uart_def *)USART2_BASE)
+#define USART2 ((uart_reg_def *)USART2_BASE)
 
 /**
     \brief Configuration parameters required for uart initialization
@@ -74,5 +74,16 @@ typedef struct {
 #define LBD_BIT_MSK (1U << LBD_BIT_POS)
 #define CTS_BIT_POS (9U)                            /*  CTS flag    */
 #define CTS_BIT_MSK (1U << CTS_BIT_MSK)
+
+/*  USART Control Register 1 */
+#define OVER8_BIT_POS (15U)
+#define UE_BIT_POS (13U)
+#define UE_BIT_MSK (1U << UE_BIT_POS)
+#define M_BIT_POS (12U)
+#define M_BIT_MSK (1U << M_BIT_POS)
+#define TE_BIT_POS (3U)
+#define TE_BIT_MSK (1U << TE_BIT_POS)
+#define RE_BIT_POS (2U)
+#define RE_BIT_MSK (1U << RE_BIT_POS)
 
 #endif
