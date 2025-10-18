@@ -1,7 +1,9 @@
 #ifndef __STM32F4_UART_H__
 #define __STM32F4_UART_H__
 
+#include "stm32f4_gpio.h"
 #include "stm32f4_periphs.h"
+#include <stdint.h>
 
 /**
     \brief Describes the USART registers.
@@ -46,9 +48,10 @@ typedef enum {
 typedef struct {
   uart_reg_def *instance;
   uart_init_def uart_init;
+  gpio_pin_config_def gpio_port;
   uint8_t *uTxBuffer;
-  uint32_t TxSize;
   uint8_t *uRxBuffer;
+  uint32_t TxSize;
   uint32_t RxSize;
   uart_states_def uart_state;
 }uart_def;
@@ -85,5 +88,9 @@ typedef struct {
 #define TE_BIT_MSK (1U << TE_BIT_POS)
 #define RE_BIT_POS (2U)
 #define RE_BIT_MSK (1U << RE_BIT_POS)
+
+/* USART Control Register 2 */
+#define STOP_BIT_POS (12U)
+
 
 #endif
