@@ -19,9 +19,9 @@
 
 /*  UART configurable stop bits    */
 #define STP_1 0U
-#define STP_05 1U
-#define STP_2 2U
-#define STP_15 3U
+#define STP_05 (1U << STOP_BIT_POS)
+#define STP_2 (2U << STOP_BIT_POS)
+#define STP_15 (3U << STOP_BIT_POS)
 
 /*  UART configurable word length   */
 #define WORD_LEN_8 0U
@@ -36,5 +36,12 @@
     @return
 */
 void uart_init(uart_def *uInstance);
+
+/**
+    @brief  
+    @param
+    @return
+*/
+void uart_tx(uart_def *uInstance, uint8_t *data);
 
 #endif
