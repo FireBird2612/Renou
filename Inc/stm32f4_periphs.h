@@ -6,26 +6,20 @@
 #define STM32F4X
 
 /* Peripherals Base Address */
-#define GPIOA_BASE  0x40020000U
+#define RCC_BASE   0x40023800U
+#define GPIOA_BASE 0x40020000U
+#define GPIOB_BASE 0x40020400U
+#define GPIOC_BASE 0x40020800U
+#define GPIOD_BASE 0x40020C00U
+#define GPIOE_BASE 0x40021000U
+#define GPIOF_BASE 0x40021400U
+#define GPIOG_BASE 0x40021800U
+#define GPIOH_BASE 0x40021C00U
 #define USART2_BASE 0x40004400U
 
-/**
-    \brief Describes the GPIO registers
-*/
-typedef struct {
-  volatile uint32_t GPIOx_MODER;   /*  port mode regsiter register */
-  volatile uint32_t GPIOx_OTYPER;  /*  port output type register   */
-  volatile uint32_t GPIOx_OSPEEDR; /*  port output speed register  */
-  volatile uint32_t GPIOx_PUPDR;   /*  port pull-up/pull-down register */
-  volatile uint32_t GPIOx_IDR;     /*  port input data register    */
-  volatile uint32_t GPIOx_ODR;     /*  port output data register   */
-  volatile uint32_t GPIOx_BSRR;    /*  port bit set/reset register */
-  volatile uint32_t GPIOx_LCKR;    /*  port configuration lock register    */
-  volatile uint32_t GPIOx_AFRL; /*  port alternate function low register    */
-  volatile uint32_t GPIOx_AFRH; /*  port alternate function high register   */
-} gpio_def;
+#define SET_BITS(REG, BIT_MASK) ((REG) |= (BIT_MASK))
+#define CLEAR_BITS(REG, BIT_MASK) ((REG) &= ~(BIT_MASK))
 
-#define GPIOA ((gpio_def *)GPIOA_BASE)
 
 
 #endif
