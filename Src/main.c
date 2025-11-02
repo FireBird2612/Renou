@@ -1,4 +1,7 @@
 #include <stdint.h>
+#include <string.h>
+#include "stdlib.h"
+#include "stdio.h"
 #include "stm32f4_gpio.h"
 #include "stm32f4_periphs.h"
 #include "stm32f4_uart.h"
@@ -22,8 +25,14 @@ int main(void) {
 
   uart_init(&usart2);
 
-  uint8_t tx_buffer[20] = "Hello World\n";
+  int8_t tx_buffer[30] = "Hello World\n";
   uart_tx(&usart2, tx_buffer);
+
+  int length = strlen((const char *)tx_buffer);
+  snprintf((char *)tx_buffer, sizeof(tx_buffer), "Length = %d\n", length);
+  uart_tx(&usart2, tx_buffer);
+
+  uart_deinit(&usart2);
 
   for (;;)
     ;
