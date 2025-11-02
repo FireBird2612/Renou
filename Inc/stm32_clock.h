@@ -55,11 +55,20 @@
 /*  Enable UARTx Clock
     NOTE TO SELF: Complete as required...
 */
-#define RCC_UARTX_CLK_EN(UARTx)                             \
-do {                                                        \
-  if (UARTx == USART2)                                      \
-    SET_BITS(RCC->RCC_APB1ENR, RCC_USART2_EN_MSK);          \
-}while(0)
+#define RCC_UARTX_CLK_EN(UARTx)                                                \
+  do {                                                                         \
+    if (UARTx == USART2)                                                       \
+      SET_BITS(RCC->RCC_APB1ENR, RCC_USART2_EN_MSK);                           \
+  } while (0)
+
+/*  Enable UARTx Clock
+    NOTE TO SELF: Complete as required...
+*/
+#define RCC_UARTX_CLK_DISABLE(UARTx)                                                \
+  do {                                                                         \
+    if (UARTx == USART2)                                                       \
+      CLEAR_BITS(RCC->RCC_APB1ENR, RCC_USART2_EN_MSK);                           \
+  } while (0)
 
 /**
     \brief Describes the GPIO registers
