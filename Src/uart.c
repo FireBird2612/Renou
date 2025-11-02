@@ -62,8 +62,7 @@ void uart_init(uart_def *uInstance) {
   if (uInstance->uart_init.WordLength == WORD_LEN_9) {
     make_mask |= WORD_LEN_9;
   }
-  /* uart enable */
-  make_mask |= UE_BIT_MSK;  
+ 
   uInstance->instance->USART_CR1 |= make_mask;
 
   /* check for stop bits */
@@ -122,13 +121,51 @@ void uart_init(uart_def *uInstance) {
   return;
 }
 
-void uart_tx(uart_def *uInstance, uint8_t *data) {
+void uart_tx(uart_def *uInstance, int8_t *data) {
+  /* Enable uart  */
+  uInstance->instance->USART_CR1 |= (UE_BIT_MSK);
+
+  uInstance->uart_state = UART_STATE_BUSY_TX;
+
+  // clear stale transmission complete flag before new TX
+  uInstance->instance->USART_SR &= ~TC_BIT_MSK;
+
   while (*data) {
+    while (!((uInstance->instance->USART_SR >> TXE_BIT_POS) & 1)); /*  Keep polling for until Transmit Data Register becomes 1 */
     uInstance->instance->USART_DR = *data++;
-    while (((uInstance->instance->USART_SR >> 7) & 1) ==
-           0) /*  Keep polling for until Transmit Data Register becomes 1 */
-      ;
   }
-  while (((uInstance->instance->USART_SR >> 6) & 1) == 0) /*  When TC = 1, End of transmission */
-    ;
+
+  while (!((uInstance->instance->USART_SR >> 6) & 1)); /*  When TC = 1, End of transmission */
+  uInstance->instance->USART_SR &= ~(TC_BIT_MSK);
+
+  uInstance->uart_state = UART_STATE_READY;
+
+  /* Disable uart after current transmission  */
+  uInstance->instance->USART_CR1 &= ~(UE_BIT_MSK);
+}
+
+void uart_deinit(uart_def *uInstance) {
+  /*   disable the uart pin outs for tx/rx  */
+  if ((uInstance->uart_state != UART_STATE_BUSY_TX) &&
+      (uInstance->uart_state != UART_STATE_BUSY_TX_RX) &&
+      (uInstance->uart_state != UART_STATE_BUSY_RX)) {
+
+    if (uInstance->uart_init.Mode == TX_RX) {
+      // Enable Transmit as well as Receive
+      uInstance->instance->USART_CR1 &= ~(RE_BIT_MSK | TE_BIT_MSK);
+    } else if (uInstance->uart_init.Mode == TX_ONLY) {
+      // Enable Transmit
+      uInstance->instance->USART_CR1 &= ~TE_BIT_MSK;
+    } else if (uInstance->uart_init.Mode == RX_ONLY) {
+      // Enable Receive
+      uInstance->instance->USART_CR1 &= ~RE_BIT_MSK;
+    } else {
+      // Error; need some mechanism for error handling.
+      uInstance->uart_state = UART_STATE_ERROR;
+      return;
+    }
+  }
+
+  // disable the clock
+  RCC_UARTX_CLK_DISABLE(uInstance->instance);
 }
