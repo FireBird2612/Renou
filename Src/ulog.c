@@ -4,3 +4,11 @@
     2.
 */
 
+#include "ulog.h"
+
+void ulog_init(void) {}
+void ulog_info() {}
+void ulog_warn() {}
+void ulog_error() {}
+
+
