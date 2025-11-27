@@ -32,18 +32,23 @@
             1. Enable the clock for USART instance and GPIO
             2. Configure the GPIO for alternate function
             3. Configure the UART for Tx/Rx/TxRx
-    @param
-    @return
+    @param  uart_def specific instance of the uart
+    @return void
 */
 void uart_init(uart_def *uInstance);
 
 /**
-    @brief  
+    @brief
     @param
     @return
 */
-void uart_tx(uart_def *uInstance, int8_t *data);
+void uart_tx(uart_def *uInstance, const uint8_t *data);
 
+/**
+    @brief
+    @param
+    @return
+*/
 void uart_deinit(uart_def *uInstance);
 
 #endif
