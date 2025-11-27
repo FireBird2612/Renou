@@ -4,14 +4,17 @@
 #include "stdio.h"
 #include "stm32f4_gpio.h"
 #include "stm32f4_periphs.h"
-#include "stm32f4_uart.h"
+//#include "stm32f4_uart.h"
 #include "uart.h"
 
 /*  global variables    */
 uart_def usart2;
 
+uint8_t tx_buffer[30] = "Hello World\n";
+
 int main(void) {
 
+  /* Configure uart */
   usart2.instance = USART2;                     /* Select which type of uart instance you want to use   */
   usart2.uart_init.BaudRate = UBR1152;          /* Configure the uart buadrate */
   usart2.uart_init.Mode = TX_ONLY;              /* Configure 1Wire UART or 2Wire UART   */
@@ -23,15 +26,12 @@ int main(void) {
   usart2.gpio_port.GPIOxPinSetBits = (1U << 2); /* Bit mask for PA2 as TX */
   usart2.gpio_port.GPIOxAF = GPIO_AF7;
 
+  /* Initialize the uart2 instance */
   uart_init(&usart2);
+  uart_tx(&usart2, (const uint8_t*)tx_buffer);
+  
 
-  int8_t tx_buffer[30] = "Hello World\n";
-  uart_tx(&usart2, tx_buffer);
-
-  int length = strlen((const char *)tx_buffer);
-  snprintf((char *)tx_buffer, sizeof(tx_buffer), "Length = %d\n", length);
-  uart_tx(&usart2, tx_buffer);
-
+  /* Deinitialize the uart2 instance */
   uart_deinit(&usart2);
 
   for (;;)
