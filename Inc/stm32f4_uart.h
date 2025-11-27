@@ -92,5 +92,23 @@ typedef struct {
 /* USART Control Register 2 */
 #define STOP_BIT_POS (12U)
 
+/*  UART oprating modes */
+#define RX_ONLY 0U
+#define TX_ONLY 1U
+#define TX_RX 2U
+
+/*  UART configurable stop bits    */
+#define STP_1 0U
+#define STP_05 (1U << STOP_BIT_POS)
+#define STP_2 (2U << STOP_BIT_POS)
+#define STP_15 (3U << STOP_BIT_POS)
+
+/*  UART configurable word length   */
+#define WORD_LEN_8 0U
+#define WORD_LEN_9 M_BIT_MSK
+
+void __uart_init(uart_def *uInstance);
+void __uart_tx(uart_def *uInstance, const uint8_t *data);
+void __uart_deinit(uart_def *uInstance);
 
 #endif
