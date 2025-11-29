@@ -28,11 +28,11 @@
 #define WORD_LEN_9 M_BIT_MSK
 
 /**
-    @brief  This will initialze the uart instance by doing following procedures
+    @brief  This will initialize the uart instance by doing following procedures
             1. Enable the clock for USART instance and GPIO
             2. Configure the GPIO for alternate function
             3. Configure the UART for Tx/Rx/TxRx
-    @param  uart_def specific instance of the uart
+    @param  uInstance Pointer to the UART instance to initialize
     @return void
 */
 void uart_init(uart_def *uInstance);
