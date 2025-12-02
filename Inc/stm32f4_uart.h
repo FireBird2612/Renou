@@ -39,7 +39,9 @@ typedef enum {
   UART_STATE_BUSY_TX,
   UART_STATE_BUSY_RX,
   UART_STATE_BUSY_TX_RX,
-  UART_STATE_ERROR
+  UART_STATE_ERROR,
+  UART_STATE_LOCKED,
+  UART_STATE_UNLOCKED
 } uart_states_def;
 
 /**
@@ -108,7 +110,7 @@ typedef struct {
 #define WORD_LEN_9 M_BIT_MSK
 
 void __uart_init(uart_def *uInstance);
-void __uart_tx(uart_def *uInstance, const uint8_t *data);
+void __uart_tx(uart_def *uInstance, const char *data);
 void __uart_deinit(uart_def *uInstance);
 
 #endif
