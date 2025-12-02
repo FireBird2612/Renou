@@ -19,7 +19,7 @@ void uart_init(uart_def *uInstance) {
   __uart_init(uInstance);
 }
 
-void uart_tx(uart_def *uInstance, const uint8_t *data) {
+void uart_tx(uart_def *uInstance, const char *data) {
   if ((!uInstance) || (!data)) {
     return;
   }
