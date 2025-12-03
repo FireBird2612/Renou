@@ -4,5 +4,5 @@
 void SystemInit(void) {
   osc_select_hse();
   ulog_init();
-  ulog_log(ULOG_INFO, "ulog initialized with USART2 instance");
+  ULOG_INFO("ulog initialized with USART2 instance");
 }
