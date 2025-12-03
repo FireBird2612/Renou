@@ -5,8 +5,14 @@
 #include "uart.h"
 
 void __uart_init(uart_def *uInstance) {
-  
-  /*  Set the GPIO Functionality here */
+  /*  Proceed only if the uart state is unlocked  */
+  if(uInstance->uart_state != UART_STATE_LOCKED){
+    uInstance->uart_state = UART_STATE_LOCKED;
+  } else {
+    return;
+  }
+
+    /*  Set the GPIO Functionality here */
   if (uInstance->instance == USART2) {
     /* Enable Clock for GPIOA Port    */
     gpio_init((uint32_t)(uInstance->gpio_port.GPIOxPortInstance));
@@ -102,7 +108,7 @@ void __uart_init(uart_def *uInstance) {
   uInstance->uart_state = UART_STATE_READY;
 }
 
-void __uart_tx(uart_def *uInstance, const uint8_t *data) {
+void __uart_tx(uart_def *uInstance, const char *data) {
 
   if (uInstance->uart_state == UART_STATE_READY) {
     uInstance->uart_state = UART_STATE_BUSY_TX;
@@ -154,4 +160,6 @@ void __uart_deinit(uart_def *uInstance) {
 
   // disable the clock
   RCC_UARTX_CLK_DISABLE(uInstance->instance);
+
+  uInstance->uart_state = UART_STATE_UNLOCKED;
 }
