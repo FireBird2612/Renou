@@ -35,15 +35,15 @@ void ulog_log(ulog_level_t log_level, const char *fmt) {
 
   /* select level string */
   switch (log_level) {
-  case ULOG_INFO:
+  case LOG_INFO:
     level_str = "[INFO]:";
     break;
 
-  case ULOG_WARN:
+  case LOG_WARN:
     level_str = "[WARN]:";
     break;
 
-  case ULOG_ERROR:
+  case LOG_ERROR:
     level_str = "[ERROR]:";
     break;
 
