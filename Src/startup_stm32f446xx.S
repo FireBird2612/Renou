@@ -56,18 +56,6 @@ Reset_Handler:
   ldr   r0, =_estack
   mov   sp, r0          //set stack pointer
 
-
-/*	Enable the FPU unit: Refer to CortexM4 user guide	*/
-  ldr.w r0, =0xE000ED88
-  ldr r1, [r0]
-  orr r1, r1, #(0xF << 20)
-  str r1, [r0]
-  dsb
-  isb
-
-/* Call the clock system initialization function.*/
-  bl  SystemInit
-
 /* Copy the data segment initializers from flash to SRAM */
   ldr r0, =_sdata
   ldr r1, =_edata
@@ -99,8 +87,19 @@ LoopFillZerobss:
   cmp r2, r4
   bcc FillZerobss
 
+/*	Enable the FPU unit: Refer to CortexM4 user guide	*/
+  ldr.w r0, =0xE000ED88
+  ldr r1, [r0]
+  orr r1, r1, #(0xF << 20)
+  str r1, [r0]
+  dsb
+  isb
+
+	bl SystemInit
+
 /* Call static constructors */
   bl __libc_init_array
+
 /* Call the application's entry point.*/
   bl main
 
