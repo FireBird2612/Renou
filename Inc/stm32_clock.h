@@ -4,6 +4,15 @@
 #include "stm32f4_periphs.h"
 #include "stm32f4_gpio.h"
 
+/*  RCC_CR bit definitions  */
+#define RCC_CR_HSEON_POS (16U)
+#define RCC_CR_HSEON_MSK ((1U) << (RCC_CR_HSEON_POS))
+#define RCC_CR_HSERDY_POS (17U)
+#define RCC_CR_HSERDY_MSK ((1U) << (RCC_CR_HSERDY_POS))
+#define RCC_CR_HSEBYP_POS (18U)
+#define RCC_CR_HSEBYP_MSK ((1U) << (RCC_CR_HSEBYP_POS))
+
+
 /*  RCC_AHB1ENR register bits    */
 #define RCC_GPIOA_EN_POS (0U)
 #define RCC_GPIOA_EN_MSK ((1U) << (RCC_GPIOA_EN_POS))
@@ -109,5 +118,7 @@ typedef struct {
   volatile uint32_t RCC_CKGATENR;
   volatile uint32_t RCC_DCKCFGR2;
 } rcc_reg_def;
+
+int osc_select_hse(void);
 
 #endif

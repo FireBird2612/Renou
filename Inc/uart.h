@@ -42,7 +42,7 @@ void uart_init(uart_def *uInstance);
     @param
     @return
 */
-void uart_tx(uart_def *uInstance, const uint8_t *data);
+void uart_tx(uart_def *uInstance, const char *data);
 
 /**
     @brief
