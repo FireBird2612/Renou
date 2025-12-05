@@ -34,12 +34,14 @@
 /*  RCC_APB1ENR register bits   */
 #define RCC_USART2_EN_POS (17U)
 #define RCC_USART2_EN_MSK ((1U) << (RCC_USART2_EN_POS))
+#define RCC_TIM2_EN_POS (0U)
+#define RCC_TIM2_EN_MSK ((1U) << (RCC_TIM2_EN_POS))
 
 /*  RCC register instance macro */
 #define RCC ((rcc_reg_def *)RCC_BASE)
 
 /*  Enable GPIOx clock
-    NOTE to self: May as well convert this macro to inline function
+    NOTE to self: May as well convert this macro to inline function or might as well use switch case
 */
 #define RCC_GPIO_CLK_EN(GPIOx)                                                 \
   do {                                                                         \
@@ -73,11 +75,22 @@
 /*  Enable UARTx Clock
     NOTE TO SELF: Complete as required...
 */
-#define RCC_UARTX_CLK_DISABLE(UARTx)                                                \
+#define RCC_UARTX_CLK_DISABLE(UARTx)                                           \
   do {                                                                         \
     if (UARTx == USART2)                                                       \
-      CLEAR_BITS(RCC->RCC_APB1ENR, RCC_USART2_EN_MSK);                           \
+      CLEAR_BITS(RCC->RCC_APB1ENR, RCC_USART2_EN_MSK);                         \
   } while (0)
+
+/** Enable TIMx Clock
+    NOTE TO SELF: Conplete as required.
+    For now the comparison is (timer_reg_def*) == (timer_reg_def*)
+*/
+#define RCC_TIMX_CLK_ENABLE(TIMx)                                             \
+  do {                                                                        \
+    if (TIMx == TIM2)                                                    \
+      SET_BITS(RCC->RCC_APB1ENR, RCC_TIM2_EN_MSK);                            \
+  } while(0)
+
 
 /**
     \brief Describes the GPIO registers
