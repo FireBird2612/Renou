@@ -49,6 +49,7 @@ set(sources_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/SystemInit.c
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/ulog.c
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/stm32f4_clock.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Src/stm32f4_timer.c
 )
 
 # Include directories for all compilers
